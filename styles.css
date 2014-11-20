@@ -84,21 +84,24 @@ div.event-info{
 	border: 1px solid #ccc;
 	background-color: #fff;
 	border-left: 4px solid #3d63a4 !important;
-	height: 90%;
 }
 
 div.event-info > h2 {
-	margin: 14px 0 0 8px;
+	margin: 10px 8px;
 	color: #718dbc;
 	font-size: 13px;
 	font-weight: 600;
-	line-height: 0px;
+	line-height: 13px;
+	text-overflow: ellipsis;
+	overflow:hidden
 }
 
 div.event-info > h3 {
-	margin: 10px 0 0 8px;
+	margin: 10px 8px;
 	color: #888;
 	font-size: 10px;
 	font-weight: 100;
-	line-height: 7px;
+	line-height: 10px;
+	text-overflow: ellipsis;
+	overflow:hidden
 }

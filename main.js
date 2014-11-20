@@ -5,6 +5,20 @@ var events = [ {start: 30, end: 150}, {start: 540, end: 600}, {start: 560, end: 
 layOutDay(events);
 
 
+
+function test(){
+	var events = [];
+	var size = Math.floor(Math.random()*200);
+	for(var i=0; i<size;i++){
+		events.push({
+		start: Math.floor((Math.random() * 720)),
+		end: Math.floor((Math.random() * 720))
+	});
+	}
+	layOutDay(events);
+}
+
+
 function layOutDay(events) { 
 	var cal_width = 600;
 	var cal_height = 720;
@@ -13,6 +27,7 @@ function layOutDay(events) {
 
 
 	var cal = document.querySelector("#calendar");
+	cal.innerHTML = "";
 	cal.style.width = cal_width + "px";
 	cal.style.height = cal_height + "px";
 	cal.style.padding = "0 " + cal_padding + "px";
@@ -38,11 +53,10 @@ function layOutDay(events) {
 			}
 		}
 	}
-	console.log(events, group_size);
-	createEvents(events, group_size + 1);
+	console.log(events, events.length, createEvents(events, group_size + 1), group_size + 1);
 
 	function createEvent(event, width){
-		if(event.start && event.end){
+		if(event.start && event.end && (event.start < event.end)){
 			var title = event.title || "Sample Item";
 			var location = event.location || "Sample Location";
 			
@@ -70,15 +84,19 @@ function layOutDay(events) {
 			var cal = document.querySelector("#calendar");
 			el.appendChild(frame);
 			cal.appendChild(el);
+			return 1;
 		}
+		return 0;
 	}
 
 	function createEvents(events, group_size){
+		var count = 0;
 		var cal = document.querySelector("#calendar");
 		var width = (cal_width/group_size);
 		for(event in events){
-			createEvent(events[event], width);
+			count += createEvent(events[event], width);
 		}
+		return count;
 	}
 
 }
