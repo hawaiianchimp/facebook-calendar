@@ -1,0 +1,92 @@
+body{
+	padding: 0;
+	margin: 0;
+	font-family: "Lucida Grande", Verdana, Lucida, sans-serif;
+	letter-spacing: -.5px;
+}
+
+#nav-bar{
+	width:100%;
+	background-color: #4a6ca7;
+	color:  #fff;
+	margin: 0 0 66px 0;
+	padding: 8px 0px;
+	border-radius: 0px 0px 3px 3px;
+}
+
+#logo{
+	margin: 0px 12px;
+	color: #fff;
+	font-weight: bold;
+}
+
+#main{
+	width: 966px;
+	margin: 0 10%;
+}
+#calendar{
+	float: left;
+	display: inline;
+	background-color: #ebeceb;
+	width:600px;
+	padding: 0 10px;
+	height: 720px;
+	position: relative;
+}
+
+#hour-labels{
+	float: left;
+	display: inline;
+	margin: 0 10px 0 0;
+	position: relative;
+}
+
+#hour-labels ol#hours{
+	list-style-type: none;
+	text-align: right;
+	margin:  0px;
+}
+
+#hour-labels li.hour{
+	height: 30px;
+	top: 0;
+}
+
+.hour-label{
+	position: relative;
+	top: -10px;
+}
+
+.hour-label > .small{
+	color: #c0c1c0;
+	font-size: 10px;
+	margin: 0 0 0 6px;
+}
+
+.hour-label > .big{
+	color: #757675;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+div.event{
+	border: 1px solid #ccc;
+	border-left: 4px solid #3d63a4 !important;
+	padding: 2px 8px;
+	background-color: #fff;
+	position: absolute;
+}
+
+div.event h2 {
+	color: #718dbc;
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 0;
+}
+
+div.event h3 {
+	color: #888;
+	font-size: 10px;
+	font-weight: 100;
+	line-height: 7px;
+}
