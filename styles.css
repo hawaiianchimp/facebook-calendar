@@ -87,7 +87,7 @@ div.event-info{
 }
 
 div.event-info > h2 {
-	margin: 10px 8px;
+	margin: 10px 8px 0;
 	color: #718dbc;
 	font-size: 13px;
 	font-weight: 600;
@@ -97,7 +97,7 @@ div.event-info > h2 {
 }
 
 div.event-info > h3 {
-	margin: 10px 8px;
+	margin: 5px 8px;
 	color: #888;
 	font-size: 10px;
 	font-weight: 100;
