@@ -20,6 +20,12 @@ body{
 	font-weight: bold;
 }
 
+#instructions{
+	float: right;
+	margin: 0px 12px;
+	color: white;
+}
+
 #main{
 	width: 966px;
 	margin: 0 10%;
@@ -69,22 +75,28 @@ body{
 	font-weight: bold;
 }
 
+
 div.event{
-	border: 1px solid #ccc;
-	border-left: 4px solid #3d63a4 !important;
-	padding: 2px 8px;
-	background-color: #fff;
 	position: absolute;
 }
 
-div.event h2 {
+div.event-info{
+	border: 1px solid #ccc;
+	background-color: #fff;
+	border-left: 4px solid #3d63a4 !important;
+	height: 90%;
+}
+
+div.event-info > h2 {
+	margin: 14px 0 0 8px;
 	color: #718dbc;
 	font-size: 13px;
 	font-weight: 600;
-	line-height: 0;
+	line-height: 0px;
 }
 
-div.event h3 {
+div.event-info > h3 {
+	margin: 10px 0 0 8px;
 	color: #888;
 	font-size: 10px;
 	font-weight: 100;
