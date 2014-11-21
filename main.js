@@ -31,7 +31,7 @@ layOutDay(events);
 
 function layOutDay(events) { 
 	Array.prototype.sort.call(events, function compare(event1,event2){
-		return (event1.end - event2.end);
+		return (event1.end - event1.start) - (event2.end - event1.start);
 	})
 
 	var cal = document.querySelector("#calendar");
@@ -47,19 +47,47 @@ function layOutDay(events) {
 	// Array.prototype.reduce.call(events, function(event1, event2, index, array) {
 	// 	return increaseColumn(event1, event2);
 	// });
-	for(var e in events){
-		var overlaps = getStartOverlappingEvents(events[e], events)
-		console.log(overlaps);
-		for(var index in overlaps){
-			if(overlaps.length > events[overlaps[index]].divide){
-				events[overlaps[index]].divide = overlaps.length;
-				if (events[overlaps[index]].group == events[e].group){
-					events[overlaps[index]].group++;
+	// for(var e in events){
+	// 	var overlaps = getStartOverlappingEvents(events[e], events)
+	// 	console.log(overlaps);
+	// 	for(var index in overlaps){
+	// 		if(overlaps.length > events[overlaps[index]].divide){
+	// 			events[overlaps[index]].divide = overlaps.length;
+	// 			if (events[overlaps[index]].group == events[e].group){
+	// 				events[overlaps[index]].group++;
+	// 			}
+	// 		}
+	// 		console.log(events[overlaps[index]]);
+	// 	}
+	// }
+
+
+	function adjustEvent(events, group_num){
+		for(var e in events){
+			if(events[e].group == group_num)
+			{
+				var overlaps = getOverlappingEvents(events[e], events);
+				// for(var index in overlaps)
+				// {
+				// 	events[overlaps[index]].group++;
+				// 	events[overlaps[index]].divide = overlaps.length;
+				// }
+				// var overlaps = getStartOverlappingEvents(events[e], events)
+				console.log(overlaps);
+				for(var index in overlaps){
+						events[overlaps[index]].divide = overlaps.length;
+					console.log(overlaps[index], e);
+					if (events[overlaps[index]].group == events[e].group && overlaps[index] != e){
+						events[overlaps[index]].group++;
+					}
+					console.log(events[overlaps[index]]);
 				}
+				adjustEvent(events, group_num +1);
 			}
-			console.log(events[overlaps[index]]);
 		}
+
 	}
+	adjustEvent(events,0);
 
 	// var g = 0;
 	// while(g < group_size)
@@ -73,7 +101,7 @@ function isOverlap(event1, event2){
 }
 
 function isStartOverlap(event1, event2){
-	return (event1.start >= event2.start && event1.start < event2.end);
+	return (event1.group == event2.group) && (event1.start >= event2.start && event1.start < event2.end);
 }
 
 function increaseColumn(event1, event2){
@@ -89,7 +117,7 @@ function getOverlappingEvents(event, events){
 		return (isOverlap(event, e))? events.indexOf(e):null;
 	});
 	return Array.prototype.filter.call(arr, function(e){
-		return e;
+		return e !== null;
 	})
 }
 
