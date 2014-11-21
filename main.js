@@ -47,28 +47,22 @@ function layOutDay(events) {
 	// Array.prototype.reduce.call(events, function(event1, event2, index, array) {
 	// 	return increaseColumn(event1, event2);
 	// });
-
-	for(var i=0; i<events.length;i++){
-		var group1 = events[i].group;
-		for(var j=0; j<events.length;j++)
-		{
-			var group2 = events[j].group;
-			if((i !== j) && (group1 === group2)){
-				if(isOverlap(events[j], events[i]))
-				{
-					events[j].divide++;
-					events[i].divide++;
-					events[j].group++;
-
-					// if(events[j].group > group_size)
-					// {
-					// 	group_size = events[j].group;
-					// }
+	for(var e in events){
+		var overlaps = getStartOverlappingEvents(events[e], events)
+		console.log(overlaps);
+		for(var index in overlaps){
+			if(overlaps.length > events[overlaps[index]].divide){
+				events[overlaps[index]].divide = overlaps.length;
+				if (events[overlaps[index]].group == events[e].group){
+					events[overlaps[index]].group++;
 				}
 			}
-			//console.log(events[j]);	
+			console.log(events[overlaps[index]]);
 		}
 	}
+
+	// var g = 0;
+	// while(g < group_size)
 
 console.log(events, events.length, createEvents(events));
 }
@@ -76,6 +70,10 @@ console.log(events, events.length, createEvents(events));
 
 function isOverlap(event1, event2){
 	return (event1.start >= event2.start && event1.start < event2.end) || (event2.start >= event1.start && event2.start < event1.end);
+}
+
+function isStartOverlap(event1, event2){
+	return (event1.start >= event2.start && event1.start < event2.end);
 }
 
 function increaseColumn(event1, event2){
@@ -87,13 +85,21 @@ function increaseColumn(event1, event2){
 }
 
 function getOverlappingEvents(event, events){
-	var output = [];
-	for(var e in events){
-		if(event != events[e] && isOverlap(event, events[e])){
-				output.push(events[e]);
-		}
-	}
-	return output;
+	var arr = Array.prototype.map.call(events, function(e){
+		return (isOverlap(event, e))? events.indexOf(e):null;
+	});
+	return Array.prototype.filter.call(arr, function(e){
+		return e;
+	})
+}
+
+function getStartOverlappingEvents(event, events){
+	var arr = Array.prototype.map.call(events, function(e){
+		return (isStartOverlap(e, event))? events.indexOf(e):null;
+	});
+	return Array.prototype.filter.call(arr, function(e){
+		return e !== null;
+	})
 }
 
 
