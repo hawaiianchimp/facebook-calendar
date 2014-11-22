@@ -30,19 +30,63 @@ var events = [ {start: 30, end: 150}, {start: 540, end: 600}, {start: 560, end: 
 layOutDay(events);
 
 function layOutDay(events) { 
-	Array.prototype.sort.call(events, function compare(event1,event2){
-		return (event1.end - event1.start) - (event2.end - event1.start);
-	})
 
 	var cal = document.querySelector("#calendar");
 	cal.style.width = cal_width + "px";
 	cal.style.height = cal_height + "px";
 	cal.style.padding = "0 " + cal_padding + "px";
 
-	for(var k=0;k<events.length;k++){
-		events[k].group = 0;
-		events[k].divide = 1;
+	for(var e in events){
+		events[e].group = 0;
+		events[e].divide = 1;
 	}
+	Array.prototype.sort.call(events, function compare(event1,event2){
+		return event1.start - event2.start;
+	})
+
+	var last_event = events[0];
+	for(var e in events){
+
+		var increase_divide;
+
+		if(events[e].start < last_event.end)
+		{
+			increase_divide = last_event.divide;
+		}
+		else{
+			increase_divide = 1;
+		}
+
+		for(var j in events)
+		{
+			console.log(e,j);
+			console.log(Array.prototype.map.call(events, function(i){return (i.group+","+i.divide);}));
+			if(events[j] != events[e])
+			{
+				if((events[j].start >= events[e].start) && (events[j].start < events[e].end))
+				{
+					events[j].divide++;
+					if(events[j].end > last_event.end){
+						last_event = events[j];
+					}
+					if(events[j].group == events[e].group)
+					{
+						increase_divide++;
+						events[j].group++;
+					}
+				}
+			}
+		}
+		if(increase_divide)
+		{
+			events[e].divide = increase_divide;
+		}
+	}
+
+	// for(var k=0;k<events.length;k++){
+	// 	events[k].group = 0;
+	// 	events[k].divide = 1;
+	// }
 	//adjustEvent(events);
 	// Array.prototype.reduce.call(events, function(event1, event2, index, array) {
 	// 	return increaseColumn(event1, event2);
@@ -87,12 +131,13 @@ function layOutDay(events) {
 		}
 
 	}
-	adjustEvent(events,0);
+	//adjustEvent(events,0);
 
 	// var g = 0;
 	// while(g < group_size)
 
-console.log(events, events.length, createEvents(events));
+console.log(events);
+console.log(events.length, createEvents(events));
 }
 
 
