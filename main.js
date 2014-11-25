@@ -45,9 +45,9 @@ function layOutDay(events) {
 		return event1.start - event2.start;
 	})
 
-	arrange(events, {divide:1,group:0});
+	arrange(events, {divide:1,group:0}, events[0].end);
 
-	function arrange(events, outputs)
+	function arrange(events, outputs, end)
 	{
 		if(events.length == 0)
 		{
@@ -62,21 +62,27 @@ function layOutDay(events) {
 			var event1 = events[0];
 			var event2 = events[1];
 			var others = events.slice(1,events.length);
-			
 			event1.group = outputs.group;
 			if((event1.end > event2.start))
 			{
-				outputs.group++;
-				outputs.divide++;
+				if(event2.start > end){
+					end = event2.end;
+					outputs.group=0;
+				}
+				else{
+					outputs.group++;
+					outputs.divide++;
+				}
 
-				var outs = arrange(others, outputs);
+				var outs = arrange(others, outputs, end);
 
 				event1.divide = outs.divide;
 				return outs;
 			}
 			else{
+				end = event2.end;
 				event1.divide = outputs.divide;
-				var outs = arrange(others, outputs);
+				var outs = arrange(others, outputs, end);
 				return outs;
 			}
 			createEvents(events);
