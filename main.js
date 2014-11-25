@@ -25,8 +25,9 @@ var group_size = 0;
 
 
 var events = [ {start: 30, end: 150}, {start: 540, end: 600}, {start: 560, end: 620}, {start: 610, end: 670} ];
-var events = [ {start: 274, end: 458}, {start: 30, end: 221}, {start: 203, end: 654} ];
-var events = [ {start: 44, end: 179}, {start: 25, end: 351}, {start: 438, end: 510}, {start: 185, end: 705} ];
+//var events = [ {start: 274, end: 458}, {start: 30, end: 221}, {start: 203, end: 654} ];
+//var events = [ {start: 44, end: 179}, {start: 25, end: 351}, {start: 438, end: 510}, {start: 185, end: 705} ];
+//var events = [ {start: 139, end: 658}, {start: 243, end: 254}, {start: 344, end: 373}, {start: 383, end: 580} ];
 layOutDay(events);
 
 function layOutDay(events) { 
@@ -44,46 +45,91 @@ function layOutDay(events) {
 		return event1.start - event2.start;
 	})
 
-	var last_event = events[0];
-	for(var e in events){
+	arrange(events, {divide:1,group:0});
 
-		var increase_divide;
-
-		if(events[e].start < last_event.end)
+	function arrange(events, outputs)
+	{
+		if(events.length == 0)
 		{
-			increase_divide = last_event.divide;
+			return outputs
+		}
+		if(events.length == 1){
+			events[0].divide = outputs.divide;
+			events[0].group = outputs.group;
+			return outputs;
 		}
 		else{
-			increase_divide = 1;
-		}
-
-		for(var j = e; j<events.length;j++)
-		{
-			if(events[j] != events[e])
+			var event1 = events[0];
+			var event2 = events[1];
+			var others = events.slice(1,events.length);
+			
+			event1.group = outputs.group;
+			if((event1.end > event2.start))
 			{
-				if((events[j].start >= events[e].start) && (events[j].start < events[e].end))
-				{
-					events[j].divide++;
-					if(events[j].end > last_event.end){
-						last_event = events[j];
-					}
-					if(events[j].group == events[e].group)
-					{
-						increase_divide++;
-						events[j].group++;
-					}
-				}
+				outputs.group++;
+				outputs.divide++;
 
-				console.log(e,j);
-				console.log(Array.prototype.map.call(events, function(i){return (i.group+","+i.divide);}));
+				var outs = arrange(others, outputs);
+
+				event1.divide = outs.divide;
+				return outs;
 			}
-			createEvents(events)
-		}
-		if(increase_divide)
-		{
-			events[e].divide = increase_divide;
+			else{
+				event1.divide = outputs.divide;
+				var outs = arrange(others, outputs);
+				return outs;
+			}
+			createEvents(events);
 		}
 	}
+
+	// var last_event = events[0];
+	// var max_group = 0;
+	// for(var e in events){
+
+	// 	var increase_divide;
+
+	// 	if(events[e].start < last_event.end)
+	// 	{
+	// 		increase_divide = last_event.divide;
+	// 	}
+	// 	else{
+	// 		increase_divide = 1;
+	// 	}
+
+	// 	for(var j = e; j<events.length;j++)
+	// 	{
+	// 		if(events[j] != events[e])
+	// 		{
+	// 			if((events[j].start >= events[e].start) && (events[j].start < events[e].end))
+	// 			{
+	// 				if(events[j].start < last_event.end){
+	// 					events[j].divide++;
+	// 				}
+	// 				if(events[j].end > last_event.end){
+	// 					last_event = events[j];
+	// 				}
+	// 				if(events[j].group == events[e].group)
+	// 				{
+	// 					increase_divide++;
+	// 					events[j].group++;
+	// 				}
+	// 				if(events[j].group > max_group)
+	// 				{
+	// 					max_group = events[j].group;
+	// 				}
+	// 			}
+
+	// 			console.log(e,j);
+	// 			console.log(Array.prototype.map.call(events, function(i){return (i.group+","+i.divide);}));
+	// 		}
+	// 		createEvents(events)
+	// 	}
+	// 	if(increase_divide)
+	// 	{
+	// 		events[e].divide = Math.max(max_group + 1, increase_divide);
+	// 	}
+	// }
 
 	// for(var k=0;k<events.length;k++){
 	// 	events[k].group = 0;
