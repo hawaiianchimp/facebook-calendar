@@ -78,12 +78,15 @@ body{
 
 div.event{
 	position: absolute;
+	overflow: ;
 }
 
 div.event-info{
 	border: 1px solid #ccc;
 	background-color: #fff;
 	border-left: 4px solid #3d63a4 !important;
+	overflow:hidden
+	
 }
 
 div.event-info > h2 {

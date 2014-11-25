@@ -25,8 +25,8 @@ var group_size = 0;
 
 
 var events = [ {start: 30, end: 150}, {start: 540, end: 600}, {start: 560, end: 620}, {start: 610, end: 670} ];
-//var events = [ {start: 274, end: 458}, {start: 30, end: 221}, {start: 203, end: 654} ];
-//var events = [ {start: 44, end: 179}, {start: 25, end: 351}, {start: 438, end: 510}, {start: 185, end: 705} ];
+var events = [ {start: 274, end: 458}, {start: 30, end: 221}, {start: 203, end: 654} ];
+var events = [ {start: 44, end: 179}, {start: 25, end: 351}, {start: 438, end: 510}, {start: 185, end: 705} ];
 layOutDay(events);
 
 function layOutDay(events) { 
@@ -57,10 +57,8 @@ function layOutDay(events) {
 			increase_divide = 1;
 		}
 
-		for(var j in events)
+		for(var j = e; j<events.length;j++)
 		{
-			console.log(e,j);
-			console.log(Array.prototype.map.call(events, function(i){return (i.group+","+i.divide);}));
 			if(events[j] != events[e])
 			{
 				if((events[j].start >= events[e].start) && (events[j].start < events[e].end))
@@ -75,7 +73,11 @@ function layOutDay(events) {
 						events[j].group++;
 					}
 				}
+
+				console.log(e,j);
+				console.log(Array.prototype.map.call(events, function(i){return (i.group+","+i.divide);}));
 			}
+			createEvents(events)
 		}
 		if(increase_divide)
 		{
