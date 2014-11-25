@@ -8,7 +8,11 @@
 		<div id="main">
 			<nav id="nav-bar">
 				<span id="logo">facebook</span>
-				<a id="instructions" href="instructions.html">Instructions</a>
+				<span id="instructions">
+				<a href="instructions.html">Instructions</a>
+				<input id="testnum" maxlength="2" size="2" name="testnum" type="text" value="4"/>
+				<input type="submit" onclick="test(document.getElementById('testnum').value);" value="Test"/>
+				</span>
 			</nav>
 			<aside id="hour-labels">
 				<ol id="hours">
